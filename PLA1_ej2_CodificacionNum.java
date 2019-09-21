@@ -232,7 +232,7 @@ public class PLA1_ej2_CodificacionNum {
       respectivamente: lo que viene siendo un ejercicio de pasar el número en
       cuestión de base 10 a 3, e.g. Por eso es un método con la misma matemática
       que el anterior pero con otro punto de vista, el del cambio de base, que
-      hace que sea el doble de lento. Se podría accelerar si, en vez de calcular
+      hace que sea mucho más lento. Se podría accelerar si, en vez de calcular
       cada vez el cambio de base, se tuvieran unas TABLAS, dado que el número de
       casos, dado por la longitud de palabras, es pequeño*/
     
@@ -280,7 +280,7 @@ public class PLA1_ej2_CodificacionNum {
         le corresponden las letras PRS (no WXY, recordemos que los números van
         de 2 a 9, y luego los adapto restando 2 para que coincidan con el Array
         ALFABETO, que va de 0 a 7), tomaré el primer dígito de la base 3, que
-        es un 1 (del string de 3 letras PRS), y entonces le corresponderá una X*/
+        es un 1 (del string de 3 letras PRS), y entonces le corresponderá una R*/
       /*Empiezo con los dígitos al revés porque me vienen cambiados según los
         hallé a partir del código escrito y como para el primer método que usé
         ya me venían bien, pues los he dejado así, pero es fácil cambiarlos, ya
@@ -313,12 +313,12 @@ public class PLA1_ej2_CodificacionNum {
         viene la otra condición imprescindible
       + Leeré el ArrayList desde la última posición, una S del paso anterior,
         eliminaré ese registro y añadiré la concatenación del valor S guardado
-        con los tres nuevos TUV, añadiendo las combinaciones desde la posición 3,
-        add(3, ST), add(4, SU), add(SV). Y en la posición 2, eso es lo bueno,
-        porque sólo se han alterado por detrás, tendré la R para combinar de
-        nuevo con TUV, añadiendo desde la posición 2 y empujando todo lo que
-        haya detrás, de forma que en la posición 1 aun nos quedará la P suelta y
-        nuevamente combinaremos.
+        con los tres nuevos TUV(dígito 8), añadiendo las combinaciones desde,
+        la posición 3: add(3, ST), add(4, SU), add(5, SV). Y en la posición 2,
+        eso es lo bueno, porque sólo se han alterado por detrás, tendré la R para
+        combinar de nuevo con TUV , añadiendo desde la posición 2 y empujando todo
+        lo que haya detrás, de forma que en la posición 1 aun nos quedará la P
+        suelta y nuevamente combinaremos.
       + Ahora tendremos 9 posiciones en el ArrayList y nos toca el siguiente
         dígito. Otra vez comenzando desde atrás, recorriendo todo el ArrayList
         hasta llegar a la 1ª posición, le añadiremos la siguiente terna, de forma
@@ -335,7 +335,7 @@ public class PLA1_ej2_CodificacionNum {
     /*Es importante empezar por un ArrayList de orden 3, para tener algo que
       recorrer desde el final hasta el principio, ya para el primer dígito. Me
       estoy dando cuenta que en esencia, en realidad, creo que estoy haciendo
-      un proceso recursivo, apoyándome en la estructura del ArrayList, aunque el
+      un proceso "recursivo", apoyándome en la estructura del ArrayList, aunque el
       código sea iterativo*/
     String strTemp;
     ArrayList<String> aLstTemp = new ArrayList(0);
@@ -394,10 +394,10 @@ public class PLA1_ej2_CodificacionNum {
     //    aLstCodigo.remove(intIndiceMax + 1);
     //  }
 
-    /*Creo un arrayList para ir guardando las palabras generadas*/
-    int intNumDigitos = aLstCodigo.size();
-    
-    /*Y voy a "medir" el tiempo. Hay varios sistemas, cada uno con sus más y sus
+    /*========================================================================*/
+    /*           LAS 5 LLAMADAS, REPRESENTACIÓN DATOS Y CÁLCULO TIEMPO        */
+    /*========================================================================*/
+    /*Voy a "medir" el tiempo. Hay varios sistemas, cada uno con sus más y sus
       menos. En concreto .nanoTime() tiene precisión de ns PERO no garantizan
       esta resolución porque depende de cuando se van actualizando los relojes,
       que coincida con el momento en que uno los enciende o apaga. Y ... a ver...
@@ -406,9 +406,7 @@ public class PLA1_ej2_CodificacionNum {
     */
     long lngInicio, lngFinal, lngDuracion;
     
-    /*========================================================================*/
-    /*           LAS 5 LLAMADAS, REPRESENTACIÓN DATOS Y CÁLCULO TIEMPO        */
-    /*========================================================================*/
+    int intNumDigitos = aLstCodigo.size();
     /**********************/
     /*De forma RECURSIVA 1*/
     /**********************/
@@ -443,11 +441,7 @@ public class PLA1_ej2_CodificacionNum {
     
     ArrayList<String> aLstDecPalabrasRecur2 = Recursivo2(aLstCodigo, intNumDigitos - 1, "");
     System.out.println("Las posibles descodificaciones del código son (calculado recursivamente por el método 2 en " + lngDuracion + " ns): ");
-    //System.out.println(aLstDecPalabrasRecur);
-    //impln();
-    /*Mejoro la visibilidad del output. Convierto el ArrayList a Array para hacer
-      una función para presentar el resultado por pantalla que me valga para los
-      tres casos*/
+
     String arrDecPalabrasRecur2[] = aLstDecPalabrasRecur2.toArray(new String[aLstDecPalabrasRecur2.size()]);
     Representa(arrDecPalabrasRecur);
 
@@ -493,6 +487,7 @@ public class PLA1_ej2_CodificacionNum {
     lngDuracion = (lngFinal - lngInicio)/10;
     /**/
     ArrayList<String> aLstDecPalabrasIter3 = Iterativo3(aLstCodigo, intNumDigitos);
+    
     /*Lo convierto a Array para pasarlo a la función de visualización*/
     String arrDecPalabrasIter3[] = aLstDecPalabrasIter3.toArray(new String[aLstDecPalabrasIter3.size()]);
     System.out.println("Las posibles descodificaciones del código son (calculado iterativamente por el método 3 en " + lngDuracion + " ns): ");
